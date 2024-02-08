@@ -34,8 +34,13 @@ async function run() {
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
         const reviewsCollection = client.db("fitPulseDB").collection('reviews');
-        
+        const usersCollection = client.db('fitPulseDB').collection('users');
 
+        app.post('/user', async (req, res) => {
+            const userInfo = req.body;
+            const result = await usersCollection.insertOne(userInfo);
+            res.send(result);
+        })
 
 
     } finally {
