@@ -60,6 +60,18 @@ async function run() {
             res.send(result);
         })
 
+        app.patch('/user/:uid', async (req, res) => {
+            const uid = req.params.uid;
+            const info = req.body;
+            console.log(info);
+            const filter = { uid: uid }
+            const updateDoc = {
+                $set: info,
+            };
+            const result = await usersCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        })
+
 
     } finally {
     }
