@@ -53,6 +53,7 @@ async function run() {
 
         const reviewsCollection = client.db("fitPulseDB").collection('reviews');
         const usersCollection = client.db('fitPulseDB').collection('users');
+        const membershipCollection = client.db('fitPulseDB').collection('membership');
 
         app.post('/user', async (req, res) => {
             const userInfo = req.body;
@@ -107,6 +108,12 @@ async function run() {
         // reviews
         app.get('/reviews', async (req, res) => {
             const result = await reviewsCollection.find().toArray();
+            res.send(result);
+        })
+
+        // membership 
+        app.get('/membership', async (req, res) => {
+            const result = await membershipCollection.find().toArray();
             res.send(result);
         })
 
