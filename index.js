@@ -90,7 +90,7 @@ async function run() {
             res.send(result);
         })
 
-        app.delete('/user/:id',verifyJWT, async (req, res) => {
+        app.delete('/user/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
             const result = await usersCollection.deleteOne(query);
@@ -103,6 +103,12 @@ async function run() {
             const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10h' });
             res.send({ token });
         });
+
+        // reviews
+        app.get('/reviews', async (req, res) => {
+            const result = await reviewsCollection.find().toArray();
+            res.send(result);
+        })
 
 
     } finally {
