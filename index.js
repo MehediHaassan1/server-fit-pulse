@@ -12,6 +12,7 @@ app.use(cors())
 app.use(express.json())
 const verifyJWT = (req, res, next) => {
     const authorization = req.headers.authorization;
+    console.log(authorization);
     if (!authorization) {
         res.status(401).send({ error: true, message: 'unauthorized access' })
     }
@@ -114,6 +115,13 @@ async function run() {
         // membership 
         app.get('/membership', async (req, res) => {
             const result = await membershipCollection.find().toArray();
+            res.send(result);
+        })
+
+        app.get('/membership-details/:id', verifyJWT, async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await membershipCollection.findOne(query);
             res.send(result);
         })
 
